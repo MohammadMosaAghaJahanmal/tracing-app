@@ -1,0 +1,500 @@
+//- views/verify-email.pug
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Email Verification - Blood Donors Network
+    style.
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: #FDF2F2;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 450px;
+      }
+
+      .card {
+        background: #FFFFFF;
+        border-radius: 20px;
+        padding: 32px;
+        border: 1px solid #FFE6E6;
+        box-shadow: 0 6px 16px rgba(231, 60, 60, 0.1);
+        margin-bottom: 24px;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .email-icon {
+        font-size: 48px;
+        margin-bottom: 16px;
+      }
+
+      .title {
+        font-size: 28px;
+        font-weight: 800;
+        color: #1E1E1E;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        font-size: 16px;
+        color: #7E7E7E;
+        font-weight: 500;
+        line-height: 1.5;
+        text-align: center;
+      }
+
+      .message {
+        padding: 16px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 600;
+      }
+
+      .success-message {
+        background: #F0FDF4;
+        color: #166534;
+        border: 1px solid #BBF7D0;
+      }
+
+      .error-message {
+        background: #FEF2F2;
+        color: #991B1B;
+        border: 1px solid #FECACA;
+      }
+
+      .info-message {
+        background: #EFF6FF;
+        color: #1E40AF;
+        border: 1px solid #DBEAFE;
+      }
+
+      .warning-message {
+        background: #FFFBEB;
+        color: #92400E;
+        border: 1px solid #FCD34D;
+      }
+
+      .verify-button {
+        width: 100%;
+        background: #E73C3C;
+        color: white;
+        border: none;
+        padding: 16px;
+        border-radius: 14px;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: all 0.2s;
+        box-shadow: 0 4px 8px rgba(231, 60, 60, 0.3);
+        margin-top: 8px;
+        margin-bottom: 20px;
+      }
+
+      .verify-button:hover {
+        background: #d63232;
+        box-shadow: 0 6px 12px rgba(231, 60, 60, 0.4);
+      }
+
+      .verify-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        box-shadow: none;
+      }
+
+      .resend-button {
+        width: 100%;
+        background: transparent;
+        color: #E73C3C;
+        border: 2px solid #E73C3C;
+        padding: 12px;
+        border-radius: 14px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.2s;
+        margin-bottom: 20px;
+      }
+
+      .resend-button:hover {
+        background: #E73C3C;
+        color: white;
+      }
+
+      .resend-button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #ffffff;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .links {
+        text-align: center;
+        margin-top: 24px;
+      }
+
+      .link {
+        color: #E73C3C;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        margin: 0 10px;
+      }
+
+      .link:hover {
+        text-decoration: underline;
+      }
+
+      .countdown {
+        text-align: center;
+        color: #7E7E7E;
+        font-size: 14px;
+        margin-top: 10px;
+        font-weight: 500;
+      }
+
+      .token-info {
+        background: #F8FAFC;
+        padding: 12px;
+        border-radius: 8px;
+        margin: 16px 0;
+        font-size: 12px;
+        color: #64748B;
+        text-align: center;
+        word-break: break-all;
+      }
+
+      @media (max-width: 480px) {
+        .card {
+          padding: 24px;
+        }
+        
+        .title {
+          font-size: 24px;
+        }
+      }
+
+  body
+    .container
+      .card
+        //- Success state (already verified or successful verification)
+        if (typeof success !== 'undefined' && success) || success
+          .header
+            .email-icon ✅
+            h1.title Email Verified!
+            p.subtitle= typeof success !== 'undefined' ? success : success
+
+        //- Error state
+        else if (typeof error !== 'undefined' && error) || error
+          .header
+            .email-icon ❌
+            h1.title Verification Failed
+            p.subtitle= typeof error !== 'undefined' ? error : error
+
+        //- Initial verification page with token
+        else if token
+          .header
+            .email-icon 📧
+            h1.title Verify Your Email
+            p.subtitle Click the button below to verify your email address and complete your registration
+
+          if message
+            .message.info-message= message
+
+          .token-info
+            | Verification token received
+            br
+            small (This verifies your email address)
+
+          button.verify-button(type="button", onclick="verifyEmail()", id="verifyBtn")
+            span#verifyButtonText Verify My Email
+            span#verifyButtonLoading.loading(style="display: none")
+
+          .countdown
+            | Link expires in 
+            span#countdown #{VERIFY_TTL_MIN || 60} 
+            | minutes
+
+        //- No token - show resend form
+        else
+          .header
+            .email-icon 📧
+            h1.title Verify Your Email
+            p.subtitle Enter your email address to receive a verification link
+
+          if message
+            .message.info-message= message
+
+          .form-group
+            label.label(for="email") Email Address *
+            input#email.input(
+              type="email",
+              name="email",
+              placeholder="Enter your email address",
+              required,
+              oninput="validateEmail()"
+            )
+            #emailError.error-message
+
+          button.verify-button(type="button", onclick="sendVerificationEmail()", id="sendEmailBtn")
+            span#sendButtonText Send Verification Email
+            span#sendButtonLoading.loading(style="display: none")
+
+          .countdown#resendCountdown(style="display: none")
+            | Resend available in 
+            span#resendTimer 60 
+            | seconds
+
+  script.
+    let resendCooldown = 60;
+    let resendInterval;
+
+    function validateEmail() {
+      const email = document.getElementById('email')?.value;
+      const errorElement = document.getElementById('emailError');
+      const sendBtn = document.getElementById('sendEmailBtn');
+
+      if (!email) {
+        errorElement.textContent = '';
+        sendBtn.disabled = true;
+        return false;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        errorElement.textContent = 'Please enter a valid email address';
+        sendBtn.disabled = true;
+        return false;
+      }
+
+      errorElement.textContent = '';
+      sendBtn.disabled = false;
+      return true;
+    }
+
+    async function verifyEmail() {
+      const verifyBtn = document.getElementById('verifyBtn');
+      const verifyButtonText = document.getElementById('verifyButtonText');
+      const verifyButtonLoading = document.getElementById('verifyButtonLoading');
+
+      // Show loading state
+      verifyBtn.disabled = true;
+      verifyButtonText.style.display = 'none';
+      verifyButtonLoading.style.display = 'inline-block';
+
+      try {
+        // Get token from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+
+        if (!token) {
+          throw new Error('No verification token found');
+        }
+
+        const response = await fetch('/api/verify', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ token })
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+          // Redirect to success page
+          window.location.href = window.location.pathname + '?success=' + encodeURIComponent(data.message);
+        } else {
+          // Redirect to error page
+          window.location.href = window.location.pathname + '?error=' + encodeURIComponent(data.message);
+        }
+
+      } catch (error) {
+        console.error('Verification error:', error);
+        window.location.href = window.location.pathname + '?error=' + encodeURIComponent('Network error. Please try again.');
+      } finally {
+        // Reset button state
+        verifyBtn.disabled = false;
+        verifyButtonText.style.display = 'inline-block';
+        verifyButtonLoading.style.display = 'none';
+      }
+    }
+
+    async function sendVerificationEmail() {
+      const email = document.getElementById('email')?.value;
+      const sendBtn = document.getElementById('sendEmailBtn');
+      const sendButtonText = document.getElementById('sendButtonText');
+      const sendButtonLoading = document.getElementById('sendButtonLoading');
+      const resendCountdown = document.getElementById('resendCountdown');
+      const resendTimer = document.getElementById('resendTimer');
+
+      if (!validateEmail()) return;
+
+      // Show loading state
+      sendBtn.disabled = true;
+      sendButtonText.style.display = 'none';
+      sendButtonLoading.style.display = 'inline-block';
+
+      try {
+        const response = await fetch('/api/send-verification', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email })
+        });
+
+        const data = await response.json();
+
+        if (data.status === 'success') {
+          // Show success message
+          alert('Verification email sent! Please check your inbox.');
+          
+          // Start resend cooldown
+          startResendCooldown();
+        } else {
+          alert('Error: ' + data.message);
+        }
+
+      } catch (error) {
+        console.error('Send verification error:', error);
+        alert('Network error. Please try again.');
+      } finally {
+        // Reset button state
+        sendBtn.disabled = false;
+        sendButtonText.style.display = 'inline-block';
+        sendButtonLoading.style.display = 'none';
+      }
+    }
+
+    function startResendCooldown() {
+      const sendBtn = document.getElementById('sendEmailBtn');
+      const resendCountdown = document.getElementById('resendCountdown');
+      const resendTimer = document.getElementById('resendTimer');
+
+      sendBtn.disabled = true;
+      sendBtn.textContent = 'Resend Email';
+      resendCountdown.style.display = 'block';
+      resendCooldown = 60;
+
+      resendInterval = setInterval(() => {
+        resendCooldown--;
+        resendTimer.textContent = resendCooldown;
+
+        if (resendCooldown <= 0) {
+          clearInterval(resendInterval);
+          sendBtn.disabled = false;
+          resendCountdown.style.display = 'none';
+        }
+      }, 1000);
+    }
+
+    function startTokenCountdown() {
+      const countdownElement = document.getElementById('countdown');
+      if (!countdownElement) return;
+
+      let minutes = parseInt(countdownElement.textContent);
+      let totalSeconds = minutes * 60;
+
+      const countdownInterval = setInterval(() => {
+        totalSeconds--;
+        
+        if (totalSeconds <= 0) {
+          clearInterval(countdownInterval);
+          countdownElement.textContent = '0';
+          // Optionally disable verify button when expired
+          const verifyBtn = document.getElementById('verifyBtn');
+          if (verifyBtn) {
+            verifyBtn.disabled = true;
+            verifyBtn.textContent = 'Link Expired';
+          }
+        } else {
+          const mins = Math.floor(totalSeconds / 60);
+          const secs = totalSeconds % 60;
+          countdownElement.textContent = `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+      }, 1000);
+    }
+
+    // Handle URL parameters on client side
+    function handleUrlParameters() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const success = urlParams.get('success');
+      const error = urlParams.get('error');
+      
+      if (success || error) {
+        // Remove parameters from URL without reloading
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Update the page content
+        const card = document.querySelector('.card');
+        if (success) {
+          card.innerHTML = `
+            <div class="header">
+              <div class="email-icon">✅</div>
+              <h1 class="title">Email Verified!</h1>
+              <p class="subtitle">${decodeURIComponent(success)}</p>
+            </div>
+          `;
+        } else if (error) {
+          card.innerHTML = `
+            <div class="header">
+              <div class="email-icon">❌</div>
+              <h1 class="title">Verification Failed</h1>
+              <p class="subtitle">${decodeURIComponent(error)}</p>
+            </div>
+          `;
+        }
+      }
+    }
+
+    // Auto-verify if token is present in URL
+    function autoVerifyIfTokenPresent() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const token = urlParams.get('token');
+      
+      if (token && document.getElementById('verifyBtn')) {
+        // Auto-click verify button after a short delay
+        setTimeout(() => {
+          document.getElementById('verifyBtn').click();
+        }, 1000);
+      }
+    }
+
+    // Initialize when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      handleUrlParameters();
+      startTokenCountdown();
+      autoVerifyIfTokenPresent();
+      validateEmail(); // Initial validation for resend form
+    });
