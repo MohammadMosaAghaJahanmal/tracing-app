@@ -4,6 +4,7 @@ import ImageSlider from "../components/Slider/ImageSlider";
 import QuestionBox from "../components/Content/QuestionBox";
 import SocialLinks from "../components/Content/SocialLinks";
 import Stories from "../components/Content/Stories";
+import ShareWithAdmin from "../components/ShareWithAdmin";
 
 export default function Home() {
   const [slides, setSlides] = useState([]);
@@ -48,6 +49,8 @@ export default function Home() {
         <div className="sectionTitle">Stories</div>
         <Stories stories={stories} />
       </div>
+      
+        <ShareWithAdmin />
     </div>
   );
 }

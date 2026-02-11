@@ -26,6 +26,8 @@ export default function AdminSidebar() {
         <NavLink to="/admin/responses">Responses</NavLink>
         <NavLink to="/admin/live-text">Live Text</NavLink>
         <NavLink to="/admin/clicks">Button Clicks</NavLink>
+        <NavLink to="/admin/share-requests" className="navItem">Share Requests</NavLink>
+        <NavLink to="/admin/user-shares" className="navItem">User Shares</NavLink>
       </nav>
 
       <button className="btn danger" onClick={doLogout}>Logout</button>

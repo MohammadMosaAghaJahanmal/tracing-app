@@ -19,6 +19,8 @@ const AdminTrackingData = lazy(() => import("./pages/Admin/TrackingData"));
 const AdminResponses = lazy(() => import("./pages/Admin/Responses"));
 const AdminLiveText = lazy(() => import("./pages/Admin/LiveText"));
 const Clicks = lazy(() => import("./pages/Admin/Clicks"));
+const ShareRequests = lazy(() => import("./pages/Admin/ShareRequests"));
+const UserShares = lazy(() => import("./pages/Admin/UserShares"));
 
 export default function App() {
   useEffect(() => {
@@ -47,6 +49,8 @@ export default function App() {
               <Route path="/admin/responses" element={<AdminResponses />} />
               <Route path="/admin/live-text" element={<AdminLiveText />} />
               <Route path="/admin/clicks" element={<Clicks />} />
+              <Route path="/admin/share-requests" element={<ShareRequests  />} />
+              <Route path="/admin/user-shares" element={<UserShares  />} />
             </Route>
 
             <Route path="*" element={<NotFound />} />
