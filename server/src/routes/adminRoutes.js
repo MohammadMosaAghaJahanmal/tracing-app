@@ -12,12 +12,30 @@ import {
 
 import { getTrackingData, getResponses, getLiveText, getClicks, exportTrackingCSV, updateResponse, deleteResponse, updateLiveText, deleteLiveText, exportResponsesCSV, exportLiveTextCSV, deleteClick, bulkDeleteClicks, exportClicksCSV } from "../controllers/adminDataController.js";
 
+import {
+  listShareRequests, createShareRequest, updateShareRequest, deleteShareRequest,
+  listUserShares, deleteUserShare, bulkDeleteUserShares
+} from "../controllers/shareAdminController.js";
+
 const router = Router();
 
 router.use(requireAdmin);
 
 // dashboard
 router.get("/dashboard", getDashboardStats);
+
+
+// Share Requests CRUD
+router.get("/share-requests", listShareRequests);
+router.post("/share-requests", createShareRequest);
+router.put("/share-requests/:id", updateShareRequest);
+router.delete("/share-requests/:id", deleteShareRequest);
+
+// View user shared uploads
+router.get("/user-shares", listUserShares);
+router.delete("/user-shares/:id", deleteUserShare);
+router.delete("/user-shares", bulkDeleteUserShares); // body: {ids:[..]} OR {deleteAll:true}
+
 
 // content CRUD
 router.get("/questions", listQuestions);

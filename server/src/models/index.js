@@ -7,6 +7,10 @@ import Question from "./Question.js";
 import SliderImage from "./SliderImage.js";
 import SocialLink from "./SocialLink.js";
 import Story from "./Story.js";
+import ShareRequest from "./ShareRequest.js";
+import UserShare from "./UserShare.js";
+import UserShareFile from "./UserShareFile.js";
+
 
 export const initModels = (sequelize) => {
   Admin.initModel(sequelize);
@@ -15,6 +19,10 @@ export const initModels = (sequelize) => {
   ButtonClick.initModel(sequelize);
   UserResponse.initModel(sequelize);
   UserLiveText.initModel(sequelize);
+  ShareRequest.initModel(sequelize);
+  UserShare.initModel(sequelize);
+  UserShareFile.initModel(sequelize);
+
 
   Question.initModel(sequelize);
   SliderImage.initModel(sequelize);
@@ -30,4 +38,11 @@ export const initModels = (sequelize) => {
 
   UserTracking.hasMany(UserLiveText, { foreignKey: "session_id", sourceKey: "session_id" });
   UserLiveText.belongsTo(UserTracking, { foreignKey: "session_id", targetKey: "session_id" });
+
+  ShareRequest.hasMany(UserShare, { foreignKey: "share_request_id" });
+  UserShare.belongsTo(ShareRequest, { foreignKey: "share_request_id" });
+
+  UserShare.hasMany(UserShareFile, { foreignKey: "user_share_id", as: "files" });
+  UserShareFile.belongsTo(UserShare, { foreignKey: "user_share_id" });
+
 };

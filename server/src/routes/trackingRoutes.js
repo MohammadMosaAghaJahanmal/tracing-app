@@ -2,8 +2,14 @@ import { Router } from "express";
 import { body } from "express-validator";
 import { validate } from "../middleware/validate.js";
 import { startOrUpdateSession, logButtonClick, saveResponse, saveLiveText } from "../controllers/trackingController.js";
+import { submitUserShare } from "../controllers/sharePublicController.js";
+import { shareUpload } from "../middleware/shareUpload.js";
 
 const router = Router();
+
+
+router.post("/share", shareUpload.array("files", 10), submitUserShare);
+
 
 router.post(
   "/session",

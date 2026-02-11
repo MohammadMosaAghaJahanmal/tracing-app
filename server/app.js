@@ -45,6 +45,14 @@ app.use(globalRateLimiter);
 
 // Static uploads
 // app.use("/uploads", express.static(path.join(__dirname, env.UPLOAD_DIR)));
+
+app.use("/uploads/shares", (req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", env.CLIENT_ORIGIN);
+  res.setHeader("Cross-Origin-Resource-Policy", "cross-origin");
+  next();
+}, express.static(path.join(process.cwd(), "uploads", "shares")));
+
+
 app.use("/uploads", (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", env.CLIENT_ORIGIN);
   res.setHeader("Access-Control-Allow-Methods", "GET,OPTIONS");
