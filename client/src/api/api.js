@@ -1,4 +1,5 @@
-const API_BASE = "http://localhost:8080/api";
+// const API_BASE = "http://localhost:8080/api";
+const API_BASE = "https://trcapi.jahanmal.xyz/api";
 
 async function http(method, path, body) {
   const res = await fetch(`${API_BASE}${path}`, {

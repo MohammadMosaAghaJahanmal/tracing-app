@@ -45,21 +45,38 @@ export default function TrackingData() {
         <button className="btn" onClick={exportCSV}>Export CSV</button>
       </div>
 
-      <div className="table">
-        <div className="tHead">
-          <div>Session</div><div>IP</div><div>OS</div><div>Browser</div><div>Device</div><div>Time</div>
-        </div>
-        {rows.map((r) => (
-          <div className="tRow" key={r.id}>
-            <div className="wrap">{r.session_id}</div>
-            <div>{r.ip || "—"}</div>
-            <div>{r.os || "—"}</div>
-            <div>{r.browser || "—"}</div>
-            <div>{r.device || "—"}</div>
-            <div className="wrap">{new Date(r.createdAt).toLocaleString()}</div>
-          </div>
-        ))}
-      </div>
+<div className="table wide">
+  <div className="tHead trackHead">
+    <div>Session</div>
+    <div>IP</div>
+    <div>City</div>
+    <div>Region</div>
+    <div>Country</div>
+    <div>Lat</div>
+    <div>Long</div>
+    <div>OS</div>
+    <div>Browser</div>
+    <div>Device</div>
+    <div>Time</div>
+  </div>
+
+  {rows.map((r) => (
+    <div className="tRow trackRow" key={r.id}>
+      <div className="wrap">{r.session_id}</div>
+      <div>{r.ip || "—"}</div>
+      <div>{r.city || "—"}</div>
+      <div>{r.region || "—"}</div>
+      <div>{r.country || "—"}</div>
+      <div>{r.latitude ?? "—"}</div>
+      <div>{r.longitude ?? "—"}</div>
+      <div>{r.os || "—"}</div>
+      <div>{r.browser || "—"}</div>
+      <div>{r.device || "—"}</div>
+      <div className="wrap">{new Date(r.createdAt).toLocaleString()}</div>
+    </div>
+  ))}
+</div>
+
 
       <div className="pager">
         <button className="btn" disabled={page <= 1} onClick={() => load(page - 1)}>Prev</button>

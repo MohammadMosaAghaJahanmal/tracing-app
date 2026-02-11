@@ -5,7 +5,7 @@ import QuestionBox from "../components/Content/QuestionBox";
 import SocialLinks from "../components/Content/SocialLinks";
 import Stories from "../components/Content/Stories";
 import ShareWithAdmin from "../components/ShareWithAdmin";
-
+import { submitResponse } from "../utils/tracking";
 export default function Home() {
   const [slides, setSlides] = useState([]);
   const [question, setQuestion] = useState(null);
@@ -27,6 +27,20 @@ export default function Home() {
     };
     load().catch(() => {});
   }, []);
+
+    const submit = async () => {
+      try {
+        await submitResponse({
+          question_id: "NO_QUESTION",
+          question_text: "I want next day content update",
+          response_text: "Yes, Update It!",
+          word_count: 1,
+          char_count: 1
+        });
+        alert("Thank you for your feedback! I will update the content by tomorrow.");
+      } catch {
+      }
+    };
 
   return (
     <div className="grid">
@@ -52,6 +66,17 @@ export default function Home() {
       <div className="full">
         <ShareWithAdmin />
       </div>
+      <div className="full">
+        <div className="sectionTitle btn primary2" style={{cursor: "default"}}>
+          Do you want new updated content on the website by tomorrow? Press the "Yes, Update It" button.
+          <br />
+          <br />
+        <button className="btn primary" onClick={submit}>
+          Yes, Update It!
+        </button>
+        </div>
+      </div>
+
 
     </div>
   );

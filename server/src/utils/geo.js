@@ -28,8 +28,8 @@ export const lookupGeo = async (ip) => {
     } catch {
       return null;
     }
+  }else{
+    // local provider fallback (no city) — still acceptable if you don’t want external calls
+    return { country: null, city: null, region: null, latitude: null, longitude: null };
   }
-
-  // local provider fallback (no city) — still acceptable if you don’t want external calls
-  return { country: null, city: null, region: null, latitude: null, longitude: null };
 };

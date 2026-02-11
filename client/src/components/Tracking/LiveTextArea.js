@@ -28,7 +28,7 @@ export default function LiveTextArea({ fieldKey = "main", placeholder = "Type he
         const minutes = Math.max(0.01, duration / 60000);
         const speed = keystrokes / minutes; // keys per minute
 
-        setStatus("Saving...");
+        setStatus("Type More...");
         try {
           await saveLiveText({
             field_key: fieldKey,
@@ -38,10 +38,10 @@ export default function LiveTextArea({ fieldKey = "main", placeholder = "Type he
             typing_duration_ms: duration,
             typing_speed_kpm: Number(speed.toFixed(2))
           });
-          setStatus("Saved ✓");
+          setStatus("Wanna Type More?");
           setVersion((v) => v + 1);
         } catch {
-          setStatus("Save failed");
+          setStatus("Failed");
         }
       }, 500),
     [fieldKey, version]

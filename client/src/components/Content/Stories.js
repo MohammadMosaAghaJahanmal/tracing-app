@@ -12,7 +12,7 @@ export default function Stories({ stories }) {
         arr.map((s) => {
           const open = openId === s.id;
           return (
-            <div className="card story" key={s.id}>
+            <div className="card story" style={{margin: "5px 0"}} key={s.id}>
               <div className="storyTop" onClick={() => setOpenId(open ? null : s.id)} role="button" tabIndex={0}>
                 <div>
                   <div className="storyTitle">{s.title}</div>

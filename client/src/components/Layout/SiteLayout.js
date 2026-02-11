@@ -7,13 +7,15 @@ export default function SiteLayout() {
     <div className="siteRoot">
       <GlobalClickTracker />
       <header className="topBar">
-        <div className="brand">Tracking App</div>
-        <div className="sub">Real-time interaction tracking + dynamic content</div>
+        <div className="brand">Written in Qadr</div>
+        <div className="sub">Between Hope & Dua</div>
       </header>
       <main className="container">
         <Outlet />
       </main>
-      <footer className="footer">© {new Date().getFullYear()} Tracking App</footer>
+      <footer className="footer">
+        © {new Date().getFullYear()} Written in Qadr
+      </footer>
     </div>
   );
 }

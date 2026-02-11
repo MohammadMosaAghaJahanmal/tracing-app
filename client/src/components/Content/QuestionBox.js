@@ -45,7 +45,7 @@ export default function QuestionBox({ question }) {
           if (ta) setFinalText(ta.value);
         }}
       >
-        <LiveTextArea fieldKey="question_answer" placeholder="Write your answer... (auto-saved every 500ms)" />
+        <LiveTextArea fieldKey="question_answer" placeholder="Any idea?" />
       </div>
 
       <div className="row">

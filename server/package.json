@@ -8,7 +8,6 @@
     "serve": "cls && node index.js"
   },
   "dependencies": {
-    "bcrypt": "^5.1.0",
     "bcryptjs": "^3.0.3",
     "child_process": "^1.0.2",
     "cookie-parser": "~1.4.4",
@@ -20,10 +19,8 @@
     "express-jwt": "^8.3.0",
     "express-rate-limit": "^7.1.5",
     "express-validator": "^7.3.1",
-    "formidable": "^2.1.1",
     "helmet": "^8.1.0",
     "http-errors": "~1.6.3",
-    "joi": "^17.7.0",
     "jsonwebtoken": "^9.0.0",
     "moment-timezone": "^0.5.45",
     "morgan": "~1.9.1",
@@ -32,7 +29,6 @@
     "node-fetch": "^3.3.2",
     "nodemailer": "^7.0.9",
     "nodemon": "^2.0.22",
-    "pug": "2.0.0-beta11",
     "sanitize-html": "^2.17.0",
     "sequelize": "^6.33.0",
     "sharp": "^0.31.3",

@@ -453,3 +453,10 @@ video.preview{ object-fit: contain; background: #000; }
 }
 .imgBtn:active{ transform: scale(0.99); }
 .slideImg{ width: 100%; display: block; border-radius: 14px; }
+
+.table.wide{ overflow-x:auto; }
+
+.trackHead, .trackRow{
+  grid-template-columns: 2fr 130px 140px 140px 140px 90px 90px 120px 140px 120px 170px;
+}
+
