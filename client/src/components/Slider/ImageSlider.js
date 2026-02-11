@@ -13,18 +13,26 @@ export default function ImageSlider({ slides }) {
     logClick({ element_type: "button", label: "Slider Prev", page: window.location.pathname });
     setIdx((p) => (p - 1 + total) % total);
   };
+
   const next = () => {
     logClick({ element_type: "button", label: "Slider Next", page: window.location.pathname });
     setIdx((p) => (p + 1) % total);
   };
 
-  const onImageClick = (img) => {
+  const onImageClick = (e, img) => {
+    const url = process.env.REACT_APP_API_BASE + img.image_url;
+
     logClick({
       element_type: "image",
       label: `Slider Image ${img?.id}`,
       page: window.location.pathname,
-      meta: { image_id: img?.id, image_url: img?.image_url }
+      x: e?.clientX,
+      y: e?.clientY,
+      meta: { image_id: img?.id, image_url: img?.image_url, open_url: url }
     });
+
+    // open big in new tab
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -50,8 +58,23 @@ export default function ImageSlider({ slides }) {
 
       <div className="slideRow">
         {current.slice(0, 2).map((img) => (
-          <div className="slideItem" key={img.id} onClick={() => onImageClick(img)} role="button" tabIndex={0}>
-            <img className="slideImg" src={process.env.REACT_APP_API_BASE + img.image_url} alt={img.title || "image"} loading="lazy" />
+          <div
+            className="slideItem"
+            key={img.id}
+            onClick={(e) => onImageClick(e, img)}
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") onImageClick(e, img);
+            }}
+            title="Open image"
+          >
+            <img
+              className="slideImg"
+              src={process.env.REACT_APP_API_BASE + img.image_url}
+              alt={img.title || "image"}
+              loading="lazy"
+            />
             <div className="slideMeta">
               <div className="slideH">{img.title || "Untitled"}</div>
               {img.description ? <div className="slideP">{img.description}</div> : null}
