@@ -4,7 +4,7 @@ import { logClick } from "../../utils/tracking";
 export default function ImageSlider({ slides }) {
   const safeSlides = useMemo(() => (Array.isArray(slides) ? slides : []), [slides]);
   const [idx, setIdx] = useState(0);
-  const [showHelp, setShowHelp] = useState(false);
+  // const [showHelp, setShowHelp] = useState(false);
 
   const total = safeSlides.length || 1;
   const current = safeSlides[idx] || [];
@@ -39,7 +39,7 @@ export default function ImageSlider({ slides }) {
     <div className="card slider">
       <div className="sliderTop">
         <div className="sliderTitle">Gallery</div>
-        <button
+        {/* <button
           className="btn ghost"
           onClick={() => {
             logClick({ element_type: "button", label: "Help Button", page: window.location.pathname });
@@ -47,14 +47,14 @@ export default function ImageSlider({ slides }) {
           }}
         >
           ?
-        </button>
+        </button> */}
       </div>
 
-      {showHelp && (
+      {/* {showHelp && (
         <div className="helpBox">
           <b>How it works:</b> Each slide contains <b>two images</b>. Buttons and image clicks are tracked.
         </div>
-      )}
+      )} */}
 
       <div className="slideRow">
         {current.slice(0, 2).map((img) => (

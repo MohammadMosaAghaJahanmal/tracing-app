@@ -6,8 +6,8 @@ import { AdminAuthContext } from "../../contexts/AdminAuthContext";
 export default function Login() {
   const { login } = useContext(AdminAuthContext);
   const nav = useNavigate();
-  const [email, setEmail] = useState("admin@example.com");
-  const [password, setPassword] = useState("Admin@123");
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
   const [msg, setMsg] = useState("");
 
   const submit = async (e) => {
@@ -34,10 +34,6 @@ export default function Login() {
 
         <button className="btn primary" type="submit">Login</button>
         <div className="hint">{msg}</div>
-
-        <div className="muted small">
-          Default: <b>admin@example.com</b> / <b>Admin@123</b>
-        </div>
       </form>
     </div>
   );
