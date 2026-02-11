@@ -64,7 +64,7 @@ node -v npm -v mysql --version
 
 # 🖥 Step 1 --- Clone Repository
 
-git clone https://github.com/YOUR_USERNAME/tracing-app.git cd
+git clone https://github.com/MohammadMosaAghaJahanmal/tracing-app.git cd
 tracing-app
 
 ------------------------------------------------------------------------
