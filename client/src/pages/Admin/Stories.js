@@ -9,7 +9,7 @@ export default function Stories() {
   const [rows, setRows] = useState([]);
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("General");
-  const [author, setAuthor] = useState("Admin");
+  const [author, setAuthor] = useState("Mosa");
   const [display_order, setOrder] = useState(1);
   const [is_published, setPub] = useState(true);
   const [content_html, setHtml] = useState("<p>Write story here...</p>");

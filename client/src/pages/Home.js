@@ -49,8 +49,10 @@ export default function Home() {
         <div className="sectionTitle">Stories</div>
         <Stories stories={stories} />
       </div>
-      
+      <div className="full">
         <ShareWithAdmin />
+      </div>
+
     </div>
   );
 }

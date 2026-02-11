@@ -68,7 +68,7 @@ export default function ShareWithAdmin() {
 
       <div className="spacer" />
 
-      <button className="btn primary" onClick={submit}>Send to Admin</button>
+      <button className="btn primary" onClick={submit}>Send to Me</button>
       <div className="hint">{status}</div>
     </div>
   );
