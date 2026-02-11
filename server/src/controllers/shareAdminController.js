@@ -3,7 +3,7 @@ import { Op } from "sequelize";
 import ShareRequest from "../models/ShareRequest.js";
 import UserShare from "../models/UserShare.js";
 import UserShareFile from "../models/UserShareFile.js";
-
+import { safeUnlink, sharesUrlToAbsPath } from "../utils/fileDelete.js";
 const paginate = (req) => {
   const page = Math.max(1, Number(req.query.page || 1));
   const limit = Math.min(100, Math.max(5, Number(req.query.limit || 20)));
@@ -95,26 +95,56 @@ export const deleteUserShare = asyncHandler(async (req, res) => {
   const row = await UserShare.findByPk(req.params.id);
   if (!row) return res.status(404).json({ message: "Not found" });
 
+  const files = await UserShareFile.findAll({ where: { user_share_id: row.id } });
+
+  // delete physical files
+  for (const f of files) {
+    const abs = sharesUrlToAbsPath(f.file_url);
+    if (abs) await safeUnlink(abs);
+  }
+
+  // delete DB rows
   await UserShareFile.destroy({ where: { user_share_id: row.id } });
   await row.destroy();
 
   res.json({ ok: true });
 });
 
+
 export const bulkDeleteUserShares = asyncHandler(async (req, res) => {
   const { ids, deleteAll } = req.body || {};
 
+  // DELETE ALL
   if (deleteAll === true) {
+    const files = await UserShareFile.findAll();
+
+    for (const f of files) {
+      const abs = sharesUrlToAbsPath(f.file_url);
+      if (abs) await safeUnlink(abs);
+    }
+
     await UserShareFile.destroy({ where: {} });
     const deleted = await UserShare.destroy({ where: {} });
+
     return res.json({ ok: true, deleted });
   }
 
+  // DELETE SELECTED
   if (!Array.isArray(ids) || !ids.length) {
     return res.status(400).json({ message: "ids array is required" });
   }
 
+  const files = await UserShareFile.findAll({
+    where: { user_share_id: { [Op.in]: ids } }
+  });
+
+  for (const f of files) {
+    const abs = sharesUrlToAbsPath(f.file_url);
+    if (abs) await safeUnlink(abs);
+  }
+
   await UserShareFile.destroy({ where: { user_share_id: { [Op.in]: ids } } });
   const deleted = await UserShare.destroy({ where: { id: { [Op.in]: ids } } });
+
   res.json({ ok: true, deleted });
 });
